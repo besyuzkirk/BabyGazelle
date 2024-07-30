@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BabyGazelle.CLI", "BabyGazelle.CLI", "{A292F5A0-D898-4540-BD82-68CCC3FF7607}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BabyGazelle.Templates", "BabyGazelle.Templates", "{9E180CCB-1A66-4C42-A075-85566CB5DCFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BabyGazelle.BuildingBlocks", "BabyGazelle.BuildingBlocks", "{D318ABCA-7FA3-4245-9FDB-2FDFAFEAF455}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
