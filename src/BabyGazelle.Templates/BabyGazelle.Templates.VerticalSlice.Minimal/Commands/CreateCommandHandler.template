@@ -1,0 +1,40 @@
+using FluentValidation;
+
+namespace {Namespace}.{EntityName}.{CommandName}
+{
+    public record {CommandName}Command({FieldDefinitions})
+        : ICommand<{CommandName}Result>;
+
+    public record {CommandName}Result(Guid Id);
+
+    public class {CommandName}CommandValidator : AbstractValidator<{CommandName}Command>
+    {
+        public {CommandName}CommandValidator()
+        {
+            {ValidationRules}
+        }
+    }
+
+    internal class {CommandName}CommandHandler : ICommandHandler<{CommandName}Command, {CommandName}Result>
+    {
+        private readonly IDocumentSession _session;
+
+        public {CommandName}CommandHandler(IDocumentSession session)
+        {
+            _session = session;
+        }
+
+        public async Task<{CommandName}Result> Handle({CommandName}Command command, CancellationToken cancellationToken)
+        {
+            var entity = new {EntityName}
+            {
+                {EntityFieldAssignments}
+            };
+            
+            _session.Store(entity);
+            await _session.SaveChangesAsync(cancellationToken);
+
+            return new {CommandName}Result(entity.Id);
+        }
+    }
+}

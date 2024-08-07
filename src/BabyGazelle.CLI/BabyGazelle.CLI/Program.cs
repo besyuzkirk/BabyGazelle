@@ -10,7 +10,7 @@ namespace BabyGazelle.CLI
             var app = new CommandApp();
             app.Configure(config =>
             {
-                config.AddCommand<HelloWorldCommand>("hello");
+                config.AddCommand<CreateCommand>("create");
             });
 
             return app.Run(args);

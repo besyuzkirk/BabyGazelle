@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BabyGazelle.BuildingBlocks"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BabyGazelle.BuildingBlocks", "BabyGazelle.BuildingBlocks\BabyGazelle.BuildingBlocks\BabyGazelle.BuildingBlocks.csproj", "{5B9FC170-CB97-4227-8E3F-2A320839E5B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BabyGazelle.Templates.VerticalSlice", "BabyGazelle.Templates\BabyGazelle.Templates.VerticalSlice\BabyGazelle.Templates.VerticalSlice.csproj", "{6209B346-4C9C-4061-8A03-387065E7FF48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BabyGazelle.CLI", "BabyGazelle.CLI\BabyGazelle.CLI\BabyGazelle.CLI.csproj", "{39B8E12A-A530-40EE-9757-A3E58FB55EAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BabyGazelle.CLI", "BabyGazelle.CLI\BabyGazelle.CLI\BabyGazelle.CLI.csproj", "{39B8E12A-A530-40EE-9757-A3E58FB55EAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BabyGazelle.Templates.VerticalSlice.Minimal", "BabyGazelle.Templates\BabyGazelle.Templates.VerticalSlice.Minimal\BabyGazelle.Templates.VerticalSlice.Minimal.csproj", "{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,22 +25,22 @@ Global
 		{5B9FC170-CB97-4227-8E3F-2A320839E5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B9FC170-CB97-4227-8E3F-2A320839E5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B9FC170-CB97-4227-8E3F-2A320839E5B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6209B346-4C9C-4061-8A03-387065E7FF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6209B346-4C9C-4061-8A03-387065E7FF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6209B346-4C9C-4061-8A03-387065E7FF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6209B346-4C9C-4061-8A03-387065E7FF48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39B8E12A-A530-40EE-9757-A3E58FB55EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39B8E12A-A530-40EE-9757-A3E58FB55EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39B8E12A-A530-40EE-9757-A3E58FB55EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39B8E12A-A530-40EE-9757-A3E58FB55EAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B9FC170-CB97-4227-8E3F-2A320839E5B6} = {D318ABCA-7FA3-4245-9FDB-2FDFAFEAF455}
-		{6209B346-4C9C-4061-8A03-387065E7FF48} = {9E180CCB-1A66-4C42-A075-85566CB5DCFC}
 		{39B8E12A-A530-40EE-9757-A3E58FB55EAC} = {A292F5A0-D898-4540-BD82-68CCC3FF7607}
+		{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B} = {9E180CCB-1A66-4C42-A075-85566CB5DCFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD6D1C3B-31AE-4273-8938-E753E7AE5D24}
