@@ -1,1 +1,41 @@
-﻿
+﻿using {Namespace}.Exceptions;
+using FluentValidation;
+
+namespace {Namespace}.{EntityName}.Update{EntityName}
+{
+    public record Update{EntityName}Command(Guid Id, {OptionalFields})
+    : ICommand<Update{EntityName}Result>;
+
+    public record Update{EntityName}Result(bool IsSuccess);
+
+    public class Update{EntityName}CommandValidator : AbstractValidator<Update{EntityName}Command>
+    {
+        public Update{EntityName}CommandValidator()
+        {
+            RuleFor(command => command.Id)
+                .NotEmpty().WithMessage("{EntityName} ID is required");
+        }
+    }
+
+    internal class Update{EntityName}CommandHandler
+    (IDocumentSession session)
+    : ICommandHandler<Update{EntityName}Command, Update{EntityName}Result>
+    {
+        public async Task<Update{EntityName}Result> Handle(Update{EntityName}Command command, CancellationToken cancellationToken)
+        {
+            var entity = await session.LoadAsync<{EntityName}>(command.Id, cancellationToken);
+
+            if (entity is null)
+            {
+                throw new {EntityName}NotFoundException(command.Id);
+            }
+
+            {EntityFieldAssignments}
+
+            session.Update(entity);
+            await session.SaveChangesAsync(cancellationToken);
+
+            return new Update{EntityName}Result(true);
+        }
+    }
+}

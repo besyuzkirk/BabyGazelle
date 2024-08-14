@@ -1,0 +1,24 @@
+namespace {Namespace}.{EntityName}.Get{EntityName}ById
+{
+    public record Get{EntityName}ByIdResponse({EntityName} {EntityName});
+    
+    public class Get{EntityName}ByIdEndpoint : ICarterModule
+    {
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            app.MapGet("/{EntityName.ToLower()}s/{id}", async (Guid id, ISender sender) =>
+            {
+                var result = await sender.Send(new Get{EntityName}ByIdQuery(id));
+
+                var response = result.Adapt<Get{EntityName}ByIdResponse>();
+
+                return Results.Ok(response);
+            })
+            .WithName("Get{EntityName}ById")
+            .Produces<Get{EntityName}ByIdResponse>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Get {EntityName} By Id")
+            .WithDescription("Get {EntityName} By Id");
+        }
+    }
+}

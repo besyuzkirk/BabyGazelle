@@ -1,1 +1,28 @@
-﻿
+﻿namespace {Namespace}.{EntityName}.Create{EntityName}
+{
+    public record Create{EntityName}Request({RequestFields});
+    public record Create{EntityName}Response(Guid Id);
+
+    public class Create{EntityName}Endpoint : ICarterModule
+    {
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            app.MapPost("/{EntityName.ToLower()}s", async (Create{EntityName}Request request, ISender sender) =>
+            {
+                var command = request.Adapt<Create{EntityName}Command>();
+
+                var result = await sender.Send(command);
+
+                var response = result.Adapt<Create{EntityName}Response>();
+
+                return Results.Created($"/{EntityName.ToLower()}s/{response.Id}", response);
+
+            })
+            .WithName("Create{EntityName}")
+            .Produces<Create{EntityName}Response>(StatusCodes.Status201Created)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Create {EntityName}")
+            .WithDescription("Create {EntityName}");
+        }
+    }
+}

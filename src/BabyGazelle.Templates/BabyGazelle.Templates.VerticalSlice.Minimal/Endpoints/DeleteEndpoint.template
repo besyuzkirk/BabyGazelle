@@ -1,0 +1,25 @@
+namespace {Namespace}.{EntityName}.Delete{EntityName}
+{
+    public record Delete{EntityName}Response(bool IsSuccess);
+
+    public class Delete{EntityName}Endpoint : ICarterModule
+    {
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            app.MapDelete("/{EntityName.ToLower()}s/{id}", async (Guid id, ISender sender) =>
+            {
+                var result = await sender.Send(new Delete{EntityName}Command(id));
+
+                var response = result.Adapt<Delete{EntityName}Response>();
+
+                return Results.Ok(response);
+            })
+            .WithName("Delete{EntityName}")
+            .Produces<Delete{EntityName}Response>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .WithSummary("Delete {EntityName}")
+            .WithDescription("Delete {EntityName}");
+        }
+    }
+}

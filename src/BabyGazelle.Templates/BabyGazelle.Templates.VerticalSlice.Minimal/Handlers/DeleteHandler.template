@@ -1,0 +1,37 @@
+using FluentValidation;
+
+namespace {Namespace}.{EntityName}.Delete{EntityName}
+{
+    public record Delete{EntityName}Command(Guid Id) : ICommand<Delete{EntityName}Result>;
+    public record Delete{EntityName}Result(bool IsSuccess);
+
+    public class Delete{EntityName}CommandValidator : AbstractValidator<Delete{EntityName}Command>
+    {
+        public Delete{EntityName}CommandValidator()
+        {
+            RuleFor(x => x.Id)
+                .NotEmpty().WithMessage("{EntityName} ID is required")
+                .Must(BeAValidGuid).WithMessage("Invalid {EntityName} ID format");
+                
+            {AdditionalValidationRules}
+        }
+
+        private bool BeAValidGuid(Guid id)
+        {
+            return id != Guid.Empty;
+        }
+    }
+
+    internal class Delete{EntityName}CommandHandler
+    (IDocumentSession session)
+    : ICommandHandler<Delete{EntityName}Command, Delete{EntityName}Result>
+    {
+        public async Task<Delete{EntityName}Result> Handle(Delete{EntityName}Command command, CancellationToken cancellationToken)
+        {
+            session.Delete<{EntityName}>(command.Id);
+            await session.SaveChangesAsync(cancellationToken);
+
+            return new Delete{EntityName}Result(true);
+        }
+    }
+}

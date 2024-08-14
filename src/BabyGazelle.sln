@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BabyGazelle.BuildingBlocks"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BabyGazelle.CLI", "BabyGazelle.CLI\BabyGazelle.CLI\BabyGazelle.CLI.csproj", "{39B8E12A-A530-40EE-9757-A3E58FB55EAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BabyGazelle.Templates.VerticalSlice.Minimal", "BabyGazelle.Templates\BabyGazelle.Templates.VerticalSlice.Minimal\BabyGazelle.Templates.VerticalSlice.Minimal.csproj", "{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BabyGazelle.Templates.VerticalSlice.Minimal", "BabyGazelle.Templates\BabyGazelle.Templates.VerticalSlice.Minimal\BabyGazelle.Templates.VerticalSlice.Minimal.csproj", "{CDFA6EEF-A98E-4A10-B836-ECFC5F096B8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

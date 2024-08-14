@@ -13,55 +13,119 @@ namespace BabyGazelle.CLI.Commands
     {
         public override async Task<int> ExecuteAsync(CommandContext context, CreateCommandSettings settings)
         {
-            if (string.IsNullOrEmpty(settings.ProjectPath))
-            {
-                Console.WriteLine("Path is required.");
-                return -1;
-            }
+            CreateAspNetCoreProject(settings.ProjectPath);
 
-            var projectPath = settings.ProjectPath;
+            // 2. Copy the model to the project
+            CopyModelToProject(settings.ModelPath, settings.ProjectPath);
 
-            try
-            {
-                Directory.CreateDirectory(projectPath);
+            // 3. Determine the entity name from the model file
+            string entityName = Path.GetFileNameWithoutExtension(settings.ModelPath); // Assuming the entity name is the same as the file name
 
-                var processInfo = new ProcessStartInfo("dotnet", $"new webapi -o {projectPath}")
-                {
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+            // 4. Create the necessary folders based on the entity name
+            CreateEntityFolders(settings.ProjectPath, entityName);
 
-                using (var process = new Process { StartInfo = processInfo })
-                {
-                    process.Start();
-                    string output = await process.StandardOutput.ReadToEndAsync();
-                    string error = await process.StandardError.ReadToEndAsync();
-                    await process.WaitForExitAsync();
-
-                    if (process.ExitCode == 0)
-                    {
-                        Console.WriteLine($"Project created successfully at {projectPath}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Error: {error}");
-                        return process.ExitCode;
-                    }
-                }
-
-                var modelsPath = Path.Combine(projectPath, "Models");
-                Directory.CreateDirectory(modelsPath);
-                Console.WriteLine($"'Models' folder created at {modelsPath}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception: {ex.Message}");
-                return -1;
-            }
+            // 5. Create the empty Handler and Endpoint classes
+            CreateHandlerAndEndpointClasses(settings.ProjectPath, entityName);
 
             return 0;
+
         }
+
+        public void CopyModelToProject(string modelPath, string projectPath)
+        {
+            string modelsFolderPath = Path.Combine(projectPath, "Models");
+
+            // Ensure the Models directory exists
+            if (!Directory.Exists(modelsFolderPath))
+            {
+                Directory.CreateDirectory(modelsFolderPath);
+            }
+
+            // Copy the model file to the Models directory
+            string modelFileName = Path.GetFileName(modelPath);
+            string destinationPath = Path.Combine(modelsFolderPath, modelFileName);
+            File.Copy(modelPath, destinationPath, overwrite: true);
+        }
+
+        public void CreateAspNetCoreProject(string projectPath)
+        {
+            // Ensure the directory exists
+            if (!Directory.Exists(projectPath))
+            {
+                Directory.CreateDirectory(projectPath);
+            }
+
+            // Run the `dotnet new webapi` command to create a new ASP.NET Core Web API project
+            var processInfo = new ProcessStartInfo("dotnet", $"new webapi --output \"{projectPath}\"")
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (var process = Process.Start(processInfo))
+            {
+                process.WaitForExit();
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                if (process.ExitCode != 0)
+                {
+                    throw new Exception($"Failed to create ASP.NET Core project: {error}");
+                }
+            }
+        }
+
+        public void CreateEntityFolders(string projectPath, string entityName)
+        {
+            string baseFolderPath = Path.Combine(projectPath, entityName);
+
+            string[] folderNames = {
+        $"Create{entityName}",
+        $"Get{entityName}ById",
+        $"Get{entityName}s",
+        $"Delete{entityName}",
+        $"Update{entityName}"
+    };
+
+            foreach (var folderName in folderNames)
+            {
+                string folderPath = Path.Combine(baseFolderPath, folderName);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+            }
+        }
+
+        public void CreateHandlerAndEndpointClasses(string projectPath, string entityName)
+        {
+            string baseFolderPath = Path.Combine(projectPath, entityName);
+
+            string[] folderNames = {
+        $"Create{entityName}",
+        $"Get{entityName}ById",
+        $"Get{entityName}s",
+        $"Delete{entityName}",
+        $"Update{entityName}"
+    };
+
+            foreach (var folderName in folderNames)
+            {
+                string handlerClassPath = Path.Combine(baseFolderPath, folderName, $"{folderName}Handler.cs");
+                string endpointClassPath = Path.Combine(baseFolderPath, folderName, $"{folderName}Endpoint.cs");
+
+                // Create empty Handler class
+                File.WriteAllText(handlerClassPath, $"namespace {entityName}.{folderName}\n{{\n    public class {folderName}Handler {{ }}\n}}");
+
+                // Create empty Endpoint class
+                File.WriteAllText(endpointClassPath, $"namespace {entityName}.{folderName}\n{{\n    public class {folderName}Endpoint {{ }}\n}}");
+            }
+        }
+
+
     }
+
+
 }

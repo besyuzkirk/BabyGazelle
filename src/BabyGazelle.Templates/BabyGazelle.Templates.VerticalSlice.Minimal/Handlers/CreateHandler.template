@@ -1,40 +1,34 @@
 using FluentValidation;
 
-namespace {Namespace}.{EntityName}.{CommandName}
+namespace {Namespace}.{EntityName}.Create{EntityName}
 {
-    public record {CommandName}Command({FieldDefinitions})
-        : ICommand<{CommandName}Result>;
+    public record Create{EntityName}Command({FieldDefinitions})
+        : ICommand<Create{EntityName}Result>;
 
-    public record {CommandName}Result(Guid Id);
+    public record Create{EntityName}Result(Guid Id);
 
-    public class {CommandName}CommandValidator : AbstractValidator<{CommandName}Command>
+    public class Create{EntityName}CommandValidator : AbstractValidator<Create{EntityName}Command>
     {
-        public {CommandName}CommandValidator()
+        public Create{EntityName}CommandValidator()
         {
             {ValidationRules}
         }
     }
 
-    internal class {CommandName}CommandHandler : ICommandHandler<{CommandName}Command, {CommandName}Result>
+    internal class Create{EntityName}CommandHandler(IDocumentSession session)
+        : ICommandHandler<Create{EntityName}Command, Create{EntityName}Result>
     {
-        private readonly IDocumentSession _session;
-
-        public {CommandName}CommandHandler(IDocumentSession session)
-        {
-            _session = session;
-        }
-
-        public async Task<{CommandName}Result> Handle({CommandName}Command command, CancellationToken cancellationToken)
+        public async Task<Create{EntityName}Result> Handle(Create{EntityName}Command command, CancellationToken cancellationToken)
         {
             var entity = new {EntityName}
             {
                 {EntityFieldAssignments}
             };
-            
-            _session.Store(entity);
-            await _session.SaveChangesAsync(cancellationToken);
 
-            return new {CommandName}Result(entity.Id);
+            session.Store(entity);
+            await session.SaveChangesAsync(cancellationToken);
+
+            return new Create{EntityName}Result(entity.Id);
         }
     }
 }

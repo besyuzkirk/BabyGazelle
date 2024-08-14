@@ -1,6 +1,27 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".txt" #>
+﻿namespace {Namespace}.{EntityName}.Get{EntityPluralName}
+{
+    public record Get{EntityPluralName}Request(int? PageNumber = 1, int? PageSize = 10);
+    public record Get{EntityPluralName}Response(IEnumerable<{EntityName}> {EntityPluralName});
+
+    public class Get{EntityPluralName}Endpoint : ICarterModule
+    {
+        public void AddRoutes(IEndpointRouteBuilder app)
+        {
+            app.MapGet("/{EntityName.ToLower()}s", async ([AsParameters] Get{EntityPluralName}Request request, ISender sender) =>
+            {
+                var query = request.Adapt<Get{EntityPluralName}Query>();
+
+                var result = await sender.Send(query);
+
+                var response = result.Adapt<Get{EntityPluralName}Response>();
+
+                return Results.Ok(response);
+            })
+            .WithName("Get{EntityPluralName}")
+            .Produces<Get{EntityPluralName}Response>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("Get {EntityPluralName}")
+            .WithDescription("Get {EntityPluralName}");
+        }
+    }
+}

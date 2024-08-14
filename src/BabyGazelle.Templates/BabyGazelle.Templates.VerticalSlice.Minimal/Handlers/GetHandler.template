@@ -1,0 +1,23 @@
+using {Namespace}.Exceptions;
+
+namespace {Namespace}.{EntityName}.Get{EntityName}ById
+{
+    public record Get{EntityName}ByIdQuery(Guid Id) : IQuery<Get{EntityName}ByIdResult>;
+    public record Get{EntityName}ByIdResult({EntityName} {EntityName});
+    
+    internal class Get{EntityName}ByIdHandler(IDocumentSession session)
+        : IQueryHandler<Get{EntityName}ByIdQuery, Get{EntityName}ByIdResult>
+    {
+        public async Task<Get{EntityName}ByIdResult> Handle(Get{EntityName}ByIdQuery query, CancellationToken cancellationToken)
+        {
+            var entity = await session.LoadAsync<{EntityName}>(query.Id, cancellationToken);
+
+            if (entity == null)
+            {
+                throw new {EntityName}NotFoundException(query.Id);
+            }
+
+            return new Get{EntityName}ByIdResult(entity);
+        }
+    }
+}

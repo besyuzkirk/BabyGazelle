@@ -1,1 +1,18 @@
-﻿
+﻿namespace {Namespace}.{EntityName}.Get{EntityPluralName}
+{
+    public record Get{EntityPluralName}Query(int? PageNumber = 1, int? PageSize = 10) : IQuery<Get{EntityPluralName}Result>;
+    public record Get{EntityPluralName}Result(IEnumerable<{EntityName}> {EntityPluralName});
+
+    internal class Get{EntityPluralName}QueryHandler
+        (IDocumentSession session, ILogger<Get{EntityPluralName}QueryHandler> logger)
+        : IQueryHandler<Get{EntityPluralName}Query, Get{EntityPluralName}Result>
+    {
+        public async Task<Get{EntityPluralName}Result> Handle(Get{EntityPluralName}Query query, CancellationToken cancellationToken)
+        {
+            var entities = await session.Query<{EntityName}>()
+                .ToPagedListAsync(query.PageNumber ?? 1, query.PageSize ?? 10, cancellationToken);
+
+            return new Get{EntityPluralName}Result(entities);
+        }
+    }
+}
