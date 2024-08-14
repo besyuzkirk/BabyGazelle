@@ -7,7 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\" />
+    <None Remove="Endpoints\CreateEndpoint.template" />
+    <None Remove="Handlers\GetListHandler.template" />
+    <None Remove="Handlers\UpdateHandler.template" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Endpoints\CreateEndpoint.template" />
+    <Compile Include="Handlers\GetListHandler.template" />
+    <Compile Include="Handlers\UpdateHandler.template" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Endpoints\GetListEndpoint.template">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GetListEndpoint.txt</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
